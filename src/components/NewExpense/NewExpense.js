@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import ExpenseForm from './ExpenseForm';
 import './NewExpense.css';
 
@@ -12,11 +12,27 @@ const NewExpense = (props) => {
         props.onAddExpense(expenseData);
     };
 
+    const [expanded, setExpanded] = useState(false)
+
+    const expandHandler = (event) => {
+        setExpanded((prevState) => {
+            if (prevState === false) {
+                return true
+            }
+            return false
+        })
+    }
+
     return (
         <div className="new-expense">
-            <ExpenseForm onSaveExpenseData={saveExpenseDataHandler}/>
+            {!expanded && <button onClick={expandHandler}>Add New Expense</button>}
+            {expanded && <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} cancelHandler={expandHandler} />}
         </div>
     )
+
+
+
+
 }
 
 export default NewExpense
